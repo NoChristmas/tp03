@@ -1,24 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import Store from './Store';
+import { Address, Restaurant } from './model/restaurant';
 
-function App() {
+let data:Restaurant = {
+  name:'누나네 식당',
+  category:'wetern',
+  address:{
+    city:'incheon',
+    detail:'somewhere',
+    zipCode:23425523,
+  },
+  menu: [{name:'rose pasta', price:2000, category:"PASTA"}, {name:'garlic steak',price:3000, category:'meat'}],
+
+}
+
+const App:React.FC = () => {
+  const[myRestaurant, setMyRestaurant] = useState<Restaurant>(data);
+  const changeAddress = (address:Address) => {
+    setMyRestaurant({...myRestaurant, address:address}) 
+    
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Store info = {myRestaurant} changeAddress = {changeAddress} />
     </div>
   );
 }
